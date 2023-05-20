@@ -34,6 +34,20 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Init
+        run: cd infra && terraform init
+
+      - name: Terraform Plan
+        id: plan
+        run: cd infra && terraform plan -out=tfplan
+
+      - name: Terraform Apply
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: cd infra && terraform apply -auto-approve tfplan
+
       - name: Task Definition File Update
         id: td
         run: |
