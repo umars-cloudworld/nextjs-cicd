@@ -34,6 +34,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
+      - name: Task Definition File Update
+        id: td
+        run: |
+          aws ecs describe-task-definition \
+                --task-definition "nextjs-task-def" \
+                --query taskDefinition > ./github/workflows/task-definition.json
+
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
