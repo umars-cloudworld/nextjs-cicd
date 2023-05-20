@@ -39,7 +39,7 @@ jobs:
         run: |
           aws ecs describe-task-definition \
                 --task-definition "nextjs-task-def" \
-                --query taskDefinition > ~/./github/workflows/task-definition.json
+                --query taskDefinition > .github/workflows/task-definition.json
 
       - name: Login to Amazon ECR
         id: login-ecr
