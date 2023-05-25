@@ -1,9 +1,9 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:us-east-1:053007704557:task-definition/nextjs-task-def:4",
+    "taskDefinitionArn": "arn:aws:ecs:us-east-1:053007704557:task-definition/nextjs-test-task-definition",
     "containerDefinitions": [
         {
             "name": "nextjs-app",
-            "image": ":",
+            "image": "053007704557.dkr.ecr.us-east-1.amazonaws.com/nextjs-app",
             "cpu": 256,
             "memory": 256,
             "portMappings": [
@@ -24,13 +24,18 @@
             "volumesFrom": []
         }
     ],
-    "family": "nextjs-task-def",
+    "family": "nextjs-test-task-definition",
     "executionRoleArn": "arn:aws:iam::053007704557:role/nextjs-ecsTaskExecutionRole",
     "networkMode": "awsvpc",
-    "revision": 4,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
+        },
         {
             "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
         },
@@ -48,6 +53,6 @@
     ],
     "cpu": "256",
     "memory": "512",
-    "registeredAt": "2023-05-21T01:39:56.990000+05:00",
+    "registeredAt": "2023-05-26T01:11:01.433000+05:00",
     "registeredBy": "arn:aws:iam::053007704557:user/dev"
 }

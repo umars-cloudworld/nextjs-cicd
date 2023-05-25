@@ -1,3 +1,7 @@
+# Use below command to update task definition
+# aws ecs describe-task-definition \
+#       --task-definition "nextjs-test-task-definition" \
+#       --query taskDefinition > ./github/workflows/task-definition.json
 name: Deploy to Amazon ECS
 
 on:
@@ -6,13 +10,12 @@ on:
       - "main"
 
 env:
-  AWS_REGION: us-east-1
-  ECR_REPOSITORY: nextjs-app
-  ECS_SERVICE: nextjs-service
-  ECS_CLUSTER: nextjs-cluster
-  ECS_TASK_DEFINITION: .github/workflows/task-definition.json
+  AWS_REGION: us-east-1 # set this to your preferred AWS region, e.g. us-west-1
+  ECR_REPOSITORY: nextjs-app # set this to your Amazon ECR repository name
+  ECS_SERVICE: nextjs-service-test # set this to your Amazon ECS service name
+  ECS_CLUSTER: nextjs-cluster-test # set this to your Amazon ECS cluster name
+  ECS_TASK_DEFINITION: .github/workflows/task-definition.json # set this to the path to your Amazon ECS task definition                                           # file, e.g. .aws/task-definition.json
   CONTAINER_NAME: nextjs-app
-
 permissions:
   id-token: write
   contents: read # This is required for actions/checkout@v2
@@ -34,56 +37,32 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Terraform Init
-        run: cd infra && terraform init
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: latest
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
-      - name: Terraform Plan
-        id: plan
-        run: cd infra && terraform plan
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION }}
+          container-name: ${{ env.CONTAINER_NAME }}
+          image: ${{ steps.build-image.outputs.image }}
 
-      # - name: Terraform Apply
-      #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      #   run: cd infra && terraform apply -auto-approve
-
-      - name: Terraform Destroy
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: cd infra && terraform destroy -auto-approve
-
-      # - name: Task Definition File Update
-      #   id: td
-      #   run: |
-      #     aws ecs describe-task-definition \
-      #           --task-definition "nextjs-task-def" \
-      #           --query taskDefinition > .github/workflows/task-definition.json
-
-      # - name: Login to Amazon ECR
-      #   id: login-ecr
-      #   uses: aws-actions/amazon-ecr-login@v1
-
-      # - name: Build, tag, and push image to Amazon ECR
-      #   id: build-image
-      #   env:
-      #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-      #     IMAGE_TAG: ${{ github.sha }}
-      #   run: |
-      #     docker build --no-cache -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-      #     docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-
-      # - name: Fill in the new image ID in the Amazon ECS task definition
-      #   id: task-def
-      #   uses: aws-actions/amazon-ecs-render-task-definition@v1
-      #   with:
-      #     task-definition: ${{ env.ECS_TASK_DEFINITION }}
-      #     container-name: ${{ env.CONTAINER_NAME }}
-      #     image: ${{ steps.build-image.outputs.image }}:${{ env.IMAGE_TAG }}
-
-      # - name: Deploy Amazon ECS task definition
-      #   uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-      #   with:
-      #     task-definition: ${{ steps.task-def.outputs.task-definition }}
-      #     service: ${{ env.ECS_SERVICE }}
-      #     cluster: ${{ env.ECS_CLUSTER }}
-      #     wait-for-service-stability: true
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true
