@@ -1,0 +1,17 @@
+region                = "us-east-1"
+app                   = "nextjs"
+environment = "dev"
+cidr                  = "192.168.0.0/16"
+public_cidr1          = "192.168.0.0/20"
+public_cidr2          = "192.168.32.0/20"
+private_cidr1         = "192.168.48.0/20"
+private_cidr2         = "192.168.64.0/20"
+repository_name       = "nextjs-app"
+cluster_name          = "nextjs-cluster"
+task_def_name         = "nextjs-task-def"
+container_name        = "nextjs-app"
+containerPort         = 3000
+hostPort              = 3000
+service_name          = "nextjs-service"
+alb_name              = "nextjs-alb"
+alb_target_group_name = "nextjs-target-group"

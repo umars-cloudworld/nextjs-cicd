@@ -1,0 +1,20 @@
+# ECS Module
+module "ecs" {
+  source                = "./module/ecs"
+  app                   = var.app
+  environment           = var.environment
+  cidr                  = var.cidr
+  public_cidr1          = var.public_cidr1
+  public_cidr2          = var.public_cidr2
+  private_cidr1         = var.private_cidr1
+  private_cidr2         = var.private_cidr2
+  repository_name       = var.repository_name
+  cluster_name          = var.cluster_name
+  task_def_name         = var.task_def_name
+  container_name        = var.container_name
+  containerPort         = var.containerPort
+  hostPort              = var.hostPort
+  service_name          = var.service_name
+  alb_name              = var.alb_name
+  alb_target_group_name = var.alb_target_group_name
+}
