@@ -5,6 +5,10 @@ variable "region" {
 variable "app" {
   description = "Project Name"
 }
+variable "environment" {
+  type        = string
+  description = "The Name  of Environment"
+} 
 variable "cidr" {
   type        = string
   description = "The Name  of CIDR Block"
