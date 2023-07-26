@@ -53,6 +53,6 @@
     ],
     "cpu": "256",
     "memory": "512",
-    "registeredAt": "2023-05-26T15:44:24.557000+05:00",
+    "registeredAt": "2023-07-26T21:43:33.814000+05:00",
     "registeredBy": "arn:aws:iam::053007704557:user/dev"
 }
