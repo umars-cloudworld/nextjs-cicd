@@ -47,7 +47,7 @@ jobs:
         id: plan
         run: cd infra && terraform plan
 
-      # - name: Terraform Apply
-      #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      #   run: cd infra && terraform apply -auto-approve
+      - name: Terraform Apply
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: cd infra && terraform apply -auto-approve
 
