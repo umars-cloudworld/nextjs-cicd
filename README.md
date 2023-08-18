@@ -1,9 +1,9 @@
 ## Contributors
 - Muhammad Umar (Host)
-# Project-5 - CICD React Deployment on Amazon S3 using CodeCommit, CodeBuild, Codepipeline and Terraform Multi Env
+# Project-2 - Secure Next.js Web App Deployment on AWS ECS using Terraform and GitHub Actions
 #  Author: Muhammad Umar                                        
 #  Email : m.umerpervaiz@gmail.com     
-![React Deployment](Project-5.jpg)
+![Nextjs Deployment](Project-2.jpg)
                      
 
 This project demonstrates how to deploy a React application on Amazon S3 using CodeCommit, CodeBuild, and CodePipeline. By following the steps outlined in this repository, you'll be able to set up a continuous deployment pipeline for your React app, ensuring automatic updates and smooth delivery to your S3 bucket.
