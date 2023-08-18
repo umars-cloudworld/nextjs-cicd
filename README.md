@@ -6,7 +6,7 @@
 ![Nextjs Deployment](Project-2.jpg)
                      
 
-This project demonstrates how to deploy a React application on Amazon S3 using CodeCommit, CodeBuild, and CodePipeline. By following the steps outlined in this repository, you'll be able to set up a continuous deployment pipeline for your React app, ensuring automatic updates and smooth delivery to your S3 bucket.
+This project demonstrates how to deploy a React application on Amazon S3 using CodeCommit, CodeBuild, and CodePipeline. By following the steps outlined in this repository, you'll be able to set up a continuous deployment pipeline for your React app, ensuring automatic updates and smooth delivery to your S3 bucket. 
 
 ## Table of Contents
 
