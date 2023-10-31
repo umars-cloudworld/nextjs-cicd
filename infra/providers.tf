@@ -9,7 +9,7 @@ terraform {
     bucket         = "terraform-statefile-nextjs-project"
     key            = "terraform.tfstate"
     region         = "us-east-1"
-    # dynamodb_table = "terraform-state-locks"
+    dynamodb_table = "terraform-state-locks"
     encrypt        = true
   }
 

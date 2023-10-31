@@ -5,53 +5,49 @@
 #  Email : m.umerpervaiz@gmail.com     
 ![Nextjs Deployment](Project-2.jpg)
                      
-
-This project demonstrates how to deploy a React application on Amazon S3 using CodeCommit, CodeBuild, and CodePipeline. By following the steps outlined in this repository, you'll be able to set up a continuous deployment pipeline for your React app, ensuring automatic updates and smooth delivery to your S3 bucket. 
+Deployed a secure Next.js web app on AWS ECS using Terraform for infrastructure setup. Strengthened 
+security through IAM, Security Groups, and a well-architected VPC. Implemented efficient CI/CD using 
+GitHub Actions, ensuring automated testing and deployment. Integrated ALB for optimal traffic 
+management, providing a seamless user experience.
 
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
-- [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
 
+
 ## Prerequisites
 
 Before getting started, ensure you have the following prerequisites:
 
-- AWS account with permissions to create CodeCommit repositories, CodeBuild projects, and CodePipeline pipelines.
-- Node.js and npm installed on your local machine for React app development.
-
-## Installation
-
-Follow these steps to set up the deployment pipeline for your React app:
-
-1. Fork this repository and clone it to your local machine.
-2. Create a new CodeCommit repository to store your React app code.
-3. Replace the sample React app in the repository with your own application code.
-4. Configure the build settings in `buildspec.yml` for CodeBuild to compile your React app.
-5. Create a new S3 bucket to host your React app.
-6. Create a CodePipeline in AWS, specifying CodeCommit as the source, CodeBuild for the build stage, and S3 for the deployment stage.
-
-### Makefile Commands
-
-To simplify the deployment process, you can use the following Makefile commands located in the root directory of this project:
-
-- `make init-dev`: Initialize Terraform Configurations of dev Environment
-- `make fmt-dev`: Formate Terraform Configurations of dev Environment
-- `make validate-dev`: Validate Terraform Configurations of dev Environment
-- `make plan-dev`: Plan Terraform Configurations of dev Environment
-- `make apply-dev`: Apply Terraform Configurations of dev Environment
-- `make destroy-dev`: Destroy Terraform Configurations of dev Environment
-
-These commands will handle the initialization, validation, planning, applying, and destroying of your Terraform infrastructure for the dev environment.
-
-
+- AWS account with appropriate permissions
 ## Usage
+Steps to follow for full CI CD deployment on ECS:
+1. Create your infrastructure using terraform
+    * Setup terraform remote state using provided backend folder
+    * Copy all the content from 1st.yml and paste it into the aws.yml file which resides in .github/workflows/
 
-Once the deployment pipeline is set up, any changes pushed to the CodeCommit repository will trigger the pipeline to automatically build and deploy the updated React app to the specified S3 bucket.
+2. Run below command to get the task-definition details in json format
+```sh
+    aws ecs describe-task-definition \
+    --task-definition "nextjs-task-def" \
+    --query taskDefinition > .github/workflows/task-definition.json
+```
+
+3. Make 2 changes in task-definition.json
+    1st - "taskDefinitionArn" remove colon and revision number
+    2nd - At line number 30 remove revision number as well.
+
+4. Create 2 secrets in github repository, with same names as below and fill the values.
+    AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY
+5. Copy all the content from 3rd.yml and paste it into the aws.yml file which resides in .github/workflows/
+
+6. Keep everything as it is in aws.yml file expect, after first successfully deployment
+    change "wait-for-service-stability: false" to true.
 
 ## Contributing
 
@@ -63,4 +59,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Contact
 
-For any inquiries or questions, please contact me at [umar@techwithomar.com](mailto:umar@techwithomar.com) or visit my website [https://techwithomar.com/](https://techwithomar.com/).
+For any inquiries or questions, please contact me
