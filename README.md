@@ -49,6 +49,8 @@ Steps to follow for full CI CD deployment on ECS:
 6. Keep everything as it is in aws.yml file expect, after first successfully deployment
     change "wait-for-service-stability: false" to true.
 
+7. Congrates on successfull deployment, Keep doing well!!!
+
 ## Contributing
 
 Contributions are welcome! If you find any issues or have improvements to suggest, feel free to open a pull request.
@@ -60,3 +62,5 @@ This project is licensed under the [MIT License](LICENSE).
 ## Contact
 
 For any inquiries or questions, please contact me
+
+                                                HAPPY LEARNING :)
