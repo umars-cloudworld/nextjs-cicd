@@ -37,6 +37,18 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
+      - name: Terraform Init
+        run: cd infra && terraform init
+
+      - name: Terraform Validate
+        run: cd infra && terraform validate
+
+      - name: Terraform Plan
+        id: plan
+        run: cd infra && terraform plan
+
       - name: Terraform Destroy
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: cd infra && terraform destroy -auto-approve
+
+
