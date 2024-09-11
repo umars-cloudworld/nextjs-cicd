@@ -1,9 +1,9 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:us-east-1:169823881759:task-definition/nextjs-task-def",
+    "taskDefinitionArn": "arn:aws:ecs:us-east-1:169823881759:task-definition/nextjs-task-def:5",
     "containerDefinitions": [
         {
             "name": "nextjs-app",
-            "image": "169823881759.dkr.ecr.us-east-1.amazonaws.com/nextjs-app",
+            "image": "169823881759.dkr.ecr.us-east-1.amazonaws.com/nextjs-app:latest",
             "cpu": 256,
             "memory": 256,
             "portMappings": [
@@ -28,6 +28,7 @@
     "family": "nextjs-task-def",
     "executionRoleArn": "arn:aws:iam::169823881759:role/ayetu-ecsTaskExecutionRole",
     "networkMode": "awsvpc",
+    "revision": 5,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -54,6 +55,6 @@
     ],
     "cpu": "256",
     "memory": "512",
-    "registeredAt": "2024-09-11T17:59:09.270000+05:00",
-    "registeredBy": "arn:aws:iam::169823881759:user/umar"
+    "registeredAt": "2024-09-11T19:10:18.412000+05:00",
+    "registeredBy": "arn:aws:iam::169823881759:user/ecs_deployment_programatic_user"
 }
