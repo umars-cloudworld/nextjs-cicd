@@ -1,5 +1,5 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:us-east-1:169823881759:task-definition/nextjs-task-def:5",
+    "taskDefinitionArn": "arn:aws:ecs:us-east-1:169823881759:task-definition/nextjs-task-def",
     "containerDefinitions": [
         {
             "name": "nextjs-app",
@@ -28,7 +28,6 @@
     "family": "nextjs-task-def",
     "executionRoleArn": "arn:aws:iam::169823881759:role/ayetu-ecsTaskExecutionRole",
     "networkMode": "awsvpc",
-    "revision": 5,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
