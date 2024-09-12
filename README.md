@@ -36,7 +36,7 @@ Steps to follow for full CI CD deployment on ECS:
     --task-definition "nextjs-task-def" \
     --query taskDefinition > .github/workflows/task-definition.json
 ```
-
+ 
 3. Make 2 changes in task-definition.json
     1st - "taskDefinitionArn" remove colon and revision number
     2nd - At line number 30 remove revision number as well.
