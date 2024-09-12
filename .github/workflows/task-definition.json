@@ -22,14 +22,6 @@
             ],
             "mountPoints": [],
             "volumesFrom": [],
-            "logConfiguration": {
-                "logDriver": "awslogs",
-                "options": {
-                    "awslogs-group": "/ecs/blockchain-app",
-                    "awslogs-region": "us-east-1",
-                    "awslogs-stream-prefix": "ecs"
-                }
-            },
             "systemControls": []
         }
     ],
@@ -50,19 +42,10 @@
     "status": "ACTIVE",
     "requiresAttributes": [
         {
-            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
-        },
-        {
-            "name": "ecs.capability.execution-role-awslogs"
-        },
-        {
             "name": "ecs.capability.efsAuth"
         },
         {
             "name": "com.amazonaws.ecs.capability.ecr-auth"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
         },
         {
             "name": "ecs.capability.efs"
@@ -93,6 +76,6 @@
     ],
     "cpu": "256",
     "memory": "512",
-    "registeredAt": "2024-09-12T18:26:39.227000+05:00",
+    "registeredAt": "2024-09-12T21:49:29.871000+05:00",
     "registeredBy": "arn:aws:iam::169823881759:user/umar"
 }
